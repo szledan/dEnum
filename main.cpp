@@ -23,14 +23,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <iostream>
+#include <map>
 #include <sstream>
 #include <string>
-#include <map>
 
 #define dEnum(ENUM, ENUM_NAMES, ...) \
     enum ENUM { \
-      __VA_ARGS__ \
+        __VA_ARGS__ \
     }; \
      \
     std::map<int, std::string> ENUM_NAMES = [](){ std::map<int, std::string> _m; int _v = 0; std::string _t; std::stringstream _ss(#__VA_ARGS__); \
@@ -49,10 +48,13 @@ dEnum( MyEnum, namesInMyEnum,
     Last,
 )
 
+#include <iostream>
+
 int main(int argc, char* argv[])
 {
-    for (int e = MyEnum::First; e <= MyEnum::Last; ++e)
+    for (int e = MyEnum::First; e <= MyEnum::Last; ++e) {
         std::cout << namesInMyEnum[e] << " = " << e << std::endl;
+    }
 
     std::cout << namesInMyEnum[MyEnum::Out] << " = " << MyEnum::Out << std::endl;
 
