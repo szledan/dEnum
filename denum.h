@@ -23,29 +23,19 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* Build:
- *  g++ -std=c++11 main.cpp
- * clang++ -std=c++11 main.cpp
- */
+#include <map>
+#include <sstream>
+#include <string>
 
-#include "denum.h"
-#include <iostream>
-
-dEnum( MyEnum, namesInMyEnum,
-    First,
-    Second,
-    Out = 10,
-    In = 6,
-    Last,
-)
-
-int main(int argc, char* argv[])
-{
-    for (int e = MyEnum::First; e <= MyEnum::Last; ++e) {
-        std::cout << namesInMyEnum[e] << " = " << e << std::endl;
-    }
-
-    std::cout << namesInMyEnum[MyEnum::Out] << " = " << MyEnum::Out << std::endl;
-
-    return 0;
-}
+#define dEnum(ENUM, ENUM_NAMES, ...) \
+    enum ENUM { \
+        __VA_ARGS__ \
+    }; \
+     \
+    std::map<int, std::string> ENUM_NAMES = [](){ std::map<int, std::string> _m; int _v = 0; std::string _t; std::stringstream _ss(#__VA_ARGS__); \
+        while(std::getline(_ss, _t, ',')) { \
+            const size_t pos = _t.find('='); if (pos != std::string::npos) _v = std::atoi(_t.substr(pos + 1).c_str()); \
+            { std::stringstream _ss_; _ss_ << _t; _ss_ >> _t; } _m[_v] = _t; _v++; \
+        } \
+        return _m; \
+    }();
