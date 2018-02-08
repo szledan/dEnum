@@ -25,7 +25,7 @@
 
 /* Build:
  *  g++ -std=c++11 main.cpp
- * clang++ -std=c++11 main.cpp
+ *  clang++ -std=c++11 main.cpp
  */
 
 #include "denum.h"
